@@ -1,0 +1,258 @@
+/* Motion rules, loader animations, and micro-interactions */
+
+/* Loader Overlay */
+.bm-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.25s var(--ease);
+  /* CSS Fallback: automatically hides after 2 seconds if JavaScript fails */
+  animation: loader-css-fallback 2s forwards;
+}
+
+.bm-loader.loader-done {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loader-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.loader-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.loader-logo-fallback {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  display: none;
+}
+
+.loader-gauge {
+  width: 160px;
+  height: 96px;
+  position: relative;
+}
+
+.loader-gauge-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.loader-track {
+  stroke: var(--surface-2);
+}
+
+.loader-fill {
+  stroke-dasharray: 251.33;
+  stroke-dashoffset: 251.33;
+  animation: loader-arc-fill 0.65s var(--ease-out) 0.1s forwards;
+}
+
+.loader-needle-group {
+  transform-origin: 100px 100px;
+  transform: rotate(-90deg);
+  animation: loader-needle-sweep 0.65s var(--ease-out) 0.1s forwards;
+}
+
+.loader-needle-pin {
+  color: var(--text);
+}
+
+.loader-bar {
+  width: 140px;
+  height: 3px;
+  background-color: var(--surface-2);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--brand-grad);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: loader-bar-sweep 0.7s var(--ease-out) forwards;
+}
+
+/* Fallback keyframes if JS fails */
+@keyframes loader-css-fallback {
+  0%, 75% {
+    opacity: 1;
+    pointer-events: all;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+}
+
+@keyframes loader-arc-fill {
+  0% {
+    stroke-dashoffset: 251.33;
+  }
+  75% {
+    stroke-dashoffset: 58;
+  }
+  100% {
+    stroke-dashoffset: 62.83;
+  }
+}
+
+@keyframes loader-needle-sweep {
+  0% {
+    transform: rotate(-90deg);
+  }
+  75% {
+    transform: rotate(50deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes loader-bar-sweep {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Hero Rise Animation */
+@keyframes hero-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Initial state for hero when loader is active */
+html:not(.intro-done) .hero-section {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+html:not(.intro-done) .hero-section.hero-revealed {
+  animation: hero-rise 0.35s var(--ease-out) forwards;
+}
+
+/* When intro was already seen in this session */
+html.intro-done .bm-loader {
+  display: none !important;
+}
+
+html.intro-done .hero-section {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Micro-interaction: number pop */
+@keyframes number-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.number-popping {
+  animation: number-pop 0.25s var(--ease-out);
+}
+
+/* Micro-interaction: pulse ring */
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+.ring-pulse-active {
+  animation: ring-pulse 0.4s var(--ease-out);
+}
+
+/* Micro-interaction: floating +1 */
+@keyframes float-plus-one {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-22px);
+  }
+}
+
+.float-chip {
+  position: absolute;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+  pointer-events: none;
+  animation: float-plus-one 0.6s var(--ease-out) forwards;
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .bm-loader {
+    display: none !important;
+  }
+
+  .hero-section {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .number-popping,
+  .ring-pulse-active,
+  .float-chip {
+    animation: none !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
