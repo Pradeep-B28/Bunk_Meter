@@ -15,6 +15,10 @@ import {
 import { initLoader } from "./motion.js";
 import { initInputUI } from "./input-ui.js";
 import { renderMeter } from "./meter-ui.js";
+import { initWhatIf, updateWhatIf } from "./whatif-ui.js";
+import { initToday, updateToday } from "./today-ui.js";
+import { initShare, updateShare } from "./share-ui.js";
+import { initSections, updateSections } from "./sections-ui.js";
 
 let ariaTimer = null;
 
@@ -100,25 +104,33 @@ function start() {
 
   let inputUI = null;
 
+  function updateAllSections(result, { immediate = false } = {}) {
+    renderMeter(meterCard, result, { immediate });
+    updateWhatIf(result);
+    updateToday(result);
+    updateShare(result);
+    updateSections(result);
+  }
+
   function handleCalculate({ immediate = false } = {}) {
     if (!inputUI) return;
     const { attended, total, target } = inputUI.getValues();
 
     if (String(attended).trim() === "" && String(total).trim() === "") {
       inputUI.clearErrors();
-      renderMeter(meterCard, null, { immediate });
+      updateAllSections(null, { immediate });
       return;
     }
 
     const r = calc(attended, total, target);
     if (!r.ok) {
       inputUI.showError(r.field, r.error);
-      renderMeter(meterCard, null, { immediate });
+      updateAllSections(null, { immediate });
       return;
     }
 
     inputUI.clearErrors();
-    renderMeter(meterCard, r, { immediate });
+    updateAllSections(r, { immediate });
 
     if (CONFIG.features.saveOnDevice) {
       saveAttendance(target, [
@@ -130,7 +142,7 @@ function start() {
   }
 
   function handleReset() {
-    renderMeter(meterCard, null);
+    updateAllSections(null);
   }
 
   inputUI = initInputUI({
@@ -139,13 +151,33 @@ function start() {
     initialTarget: CONFIG.targets[0] || 75
   });
 
+  // Initialize What if, Today, Share, Sections
+  initWhatIf();
+  initToday({}, {
+    getCurrent: () => {
+      if (!inputUI) return null;
+      const { attended, total } = inputUI.getValues();
+      return {
+        attended: Number(attended) || 0,
+        total: Number(total) || 0
+      };
+    },
+    onUpdate: (nextAttended, nextTotal) => {
+      if (!inputUI) return;
+      inputUI.setValues({ attended: nextAttended, total: nextTotal });
+      handleCalculate({ immediate: false });
+    }
+  });
+  initShare();
+  initSections();
+
   // Clear data handler
   if (saveClearBtn) {
     saveClearBtn.addEventListener("click", () => {
       clearAttendance();
       inputUI.setValues({ attended: "", total: "", target: CONFIG.targets[0] || 75 });
       inputUI.clearErrors();
-      renderMeter(meterCard, null);
+      updateAllSections(null);
       if (saveStatusText) {
         saveStatusText.textContent = t("save.cleared");
         setTimeout(() => {
@@ -180,10 +212,10 @@ function start() {
       });
       handleCalculate({ immediate: true });
     } else {
-      renderMeter(meterCard, null, { immediate: true });
+      updateAllSections(null, { immediate: true });
     }
   } else {
-    renderMeter(meterCard, null, { immediate: true });
+    updateAllSections(null, { immediate: true });
   }
 
   const hero = document.querySelector(".hero-section");

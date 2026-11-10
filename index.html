@@ -182,8 +182,147 @@
       </div>
     </section>
 
-    <!-- Additional sections shells for Phase 2 and Phase 3 -->
-    <div id="sections-container"></div>
+    <!-- What if & Today Section -->
+    <section id="sec-whatif-today" class="whatif-today-section reveal-on-scroll">
+      <div class="site-wrap">
+        <div class="whatif-today-grid">
+          <!-- What If Card -->
+          <div id="whatif-card" class="card whatif-card" data-visible="false">
+            <div class="section-card-header">
+              <h2 class="section-card-title">What if?</h2>
+              <span id="whatif-badge" class="badge whatif-badge badge-safe">Above 75%</span>
+            </div>
+            <div class="whatif-controls">
+              <div class="segmented-control" role="group" aria-label="Simulate skip or attend">
+                <button id="whatif-skip-btn" type="button" class="segmented-btn" aria-pressed="true">Skip</button>
+                <button id="whatif-attend-btn" type="button" class="segmented-btn" aria-pressed="false">Attend</button>
+              </div>
+              <div class="whatif-slider-wrap">
+                <div class="slider-header">
+                  <span class="slider-label">Classes to <span id="whatif-action-label">skip</span></span>
+                  <span id="whatif-count-val" class="slider-count-val">0</span>
+                </div>
+                <input type="range" id="whatif-slider" class="whatif-slider" min="0" max="30" value="0" aria-label="Number of classes to simulate">
+              </div>
+            </div>
+            <p id="whatif-statement" class="whatif-statement">Move the slider to see where you will be.</p>
+          </div>
+
+          <!-- Today Card -->
+          <div id="today-card" class="card today-card">
+            <div class="section-card-header">
+              <h2 class="section-card-title">Had a class today?</h2>
+            </div>
+            <p class="section-card-sub">Log today's attendance with one tap.</p>
+            <div class="today-buttons-row">
+              <button id="today-attended-btn" type="button" class="btn btn-secondary today-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>I attended</span>
+              </button>
+              <button id="today-skipped-btn" type="button" class="btn btn-secondary today-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>I skipped</span>
+              </button>
+              <button id="today-undo-btn" type="button" class="btn btn-ghost today-undo-btn" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                <span>Undo</span>
+              </button>
+            </div>
+            <div id="today-msg" class="today-msg" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Share Section -->
+    <section id="sec-share" class="share-section reveal-on-scroll" data-visible="false">
+      <div class="site-wrap">
+        <div class="card share-card">
+          <div class="share-content">
+            <div class="share-text-wrap">
+              <h2 class="share-title">Share your result</h2>
+              <p id="share-preview-text" class="share-preview-text"></p>
+            </div>
+            <button id="share-action-btn" type="button" class="btn btn-primary share-btn">
+              <svg id="share-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span id="share-btn-label">Share my result</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How the maths works Section -->
+    <section id="sec-how" class="how-section reveal-on-scroll">
+      <div class="site-wrap">
+        <div class="section-header">
+          <h2 class="section-title">How the maths works</h2>
+          <p class="section-intro">Every class you skip adds 1 to the total but not to attended. Every class you attend adds 1 to both.</p>
+        </div>
+        <div class="how-cards-grid">
+          <!-- Skip Formula Card -->
+          <div id="how-card-skip" class="card formula-card">
+            <div class="formula-card-tag">Formula</div>
+            <h3 class="formula-card-title">Classes you can skip</h3>
+            <p class="formula-code"><code>(100 × attended − <span class="formula-target-val">75</span> × total) ÷ <span class="formula-target-val">75</span>, rounded down</code></p>
+            <div id="how-skip-live" class="formula-live-line">Fill in your numbers above to see your exact calculation.</div>
+          </div>
+          <!-- Need Formula Card -->
+          <div id="how-card-need" class="card formula-card">
+            <div class="formula-card-tag">Formula</div>
+            <h3 class="formula-card-title">Classes you must attend</h3>
+            <p class="formula-code"><code>(<span class="formula-target-val">75</span> × total − 100 × attended) ÷ (100 − <span class="formula-target-val">75</span>), rounded up</code></p>
+            <div id="how-need-live" class="formula-live-line">Fill in your numbers above to see your exact calculation.</div>
+          </div>
+        </div>
+        <!-- Loop or Formula card -->
+        <div class="card loop-card">
+          <h3 class="loop-title">Loop or formula?</h3>
+          <p id="how-loop-text" class="loop-body">A loop would test one class at a time and need checks. The formula gets the answer in 1 step, however many classes you have.</p>
+        </div>
+        <p class="how-rounding-note">Percentages here are rounded down, so 74.96% shows as 74.9%, never 75%.</p>
+      </div>
+    </section>
+
+    <!-- Your turn student challenge Section -->
+    <section id="sec-your-turn" class="your-turn-section reveal-on-scroll">
+      <div class="site-wrap">
+        <div class="card your-turn-card">
+          <div class="your-turn-badge">Student Challenge</div>
+          <h2 class="your-turn-title">Your turn: add subject-wise tracking</h2>
+          <p class="your-turn-sub">Some colleges check 75% for every subject, not just overall. Build it into this project.</p>
+          <ol class="your-turn-list">
+            <li>Your numbers are already saved as a list of subjects. Right now the list has one item.</li>
+            <li>Add a form to name a subject, then show one meter card per subject.</li>
+            <li>Use the same calc() function for each card. No new maths needed.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Note & CTA Section -->
+    <section id="sec-note-cta" class="note-cta-section reveal-on-scroll">
+      <div class="site-wrap">
+        <p class="disclaimer-note">Your college's rules decide. Some count medical leave or round differently, so check with them.</p>
+        <div class="card cta-card">
+          <div class="cta-top-band" aria-hidden="true"></div>
+          <div class="cta-inner">
+            <h2 class="cta-title">Want to build tools like this?</h2>
+            <p id="cta-body" class="cta-body">Bunk Meter is built with plain JavaScript, a little maths and smart state. Learn these skills step by step in the Certification Program in AI-Powered Software Engineering & DSA.</p>
+            <div class="cta-buttons-row">
+              <a id="cta-program-btn" href="https://wrench-wise.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary cta-btn">Explore the program</a>
+              <a id="cta-whatsapp-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary cta-btn cta-whatsapp-btn is-hidden">Talk to us on WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Polite ARIA Live Region for Screen Readers -->

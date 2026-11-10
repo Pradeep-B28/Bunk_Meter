@@ -232,16 +232,30 @@ html.intro-done .hero-section {
   animation: float-plus-one 0.6s var(--ease-out) forwards;
 }
 
+/* Scroll Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Reduced motion overrides */
 @media (prefers-reduced-motion: reduce) {
   .bm-loader {
     display: none !important;
   }
 
-  .hero-section {
+  .hero-section,
+  .reveal-on-scroll {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
+    transition: none !important;
   }
 
   .number-popping,
