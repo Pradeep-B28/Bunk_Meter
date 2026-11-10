@@ -4,7 +4,7 @@ export const CONFIG = {
   version: "1.0.0",
 
   // The live address. Set in Phase 4 (deploy). Used for link previews and the share message.
-  siteUrl: "",
+  siteUrl: "https://bunk-meter-one.vercel.app",
 
   // Sales WhatsApp: digits only, country code first. Empty hides the WhatsApp button.
   salesWhatsApp: "",
