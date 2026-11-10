@@ -1201,6 +1201,94 @@
   }
 }
 
+/* In-browser Self-Test Panel */
+.selftest-panel {
+  margin: 24px auto;
+  max-width: 1120px;
+  background-color: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+}
+
+.selftest-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.selftest-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text);
+}
+
+.selftest-summary {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+}
+
+.selftest-summary-pass {
+  background-color: var(--brand-soft);
+  color: var(--brand-strong);
+  border: 1px solid var(--safe);
+}
+
+.selftest-summary-fail {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.selftest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selftest-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--surface-2);
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.selftest-badge-pass {
+  background-color: var(--brand);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.selftest-badge-fail {
+  background-color: var(--danger);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.selftest-desc {
+  color: var(--text);
+  word-break: break-word;
+}
+
 /* Active micro-interactions */
 button:active,
 .target-pill:active,

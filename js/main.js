@@ -218,6 +218,13 @@ function start() {
     updateAllSections(null, { immediate: true });
   }
 
+  // In-browser self-tests trigger (?test=1)
+  if (params.get("test") === "1" || params.has("test")) {
+    import("./selftest.js").then((m) => {
+      m.runSelfTests();
+    });
+  }
+
   const hero = document.querySelector(".hero-section");
   initLoader(() => {
     setIntroSeen();
